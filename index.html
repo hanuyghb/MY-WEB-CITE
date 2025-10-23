@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<!-- ... <!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>معرض البورتريهات بالذكاء الاصطناعي</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* الهيدر */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #764ba2;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            animation: fadeInDown 1s ease;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+            animation: fadeInUp 1s ease;
+        }
+
+        /* قسم النصائح */
+        .tips-section {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 40px 20px;
+            margin: 30px 0;
+            color: white;
+        }
+
+        .tips-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .tip-card {
+            background: rgba(255,255,255,0.2);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .tip-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .tip-card h3 {
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        /* قسم المواقع المقترحة */
+        .sites-section {
+            background: white;
+            padding: 40px 20px;
+            margin: 30px 20px;
+            border-radius: 20px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .sites-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .site-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .site-card:hover {
+            transform: scale(1.05);
+        }
+
+        .site-card h4 {
+            margin-bottom: 10px;
+        }
+
+        .site-status {
+            display: inline-block;
+            padding: 5px 10px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        /* معرض الصور */
+        .gallery-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .portrait-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .portrait-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .portrait-image {
+            width: 100%;
+            height: 350px;
+            background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portrait-image::before {
+            content: "🎨";
+            font-size: 4em;
+            opacity: 0.3;
+            position: absolute;
+        }
+
+        .portrait-info {
+            padding: 20px;
+        }
+
+        .portrait-title {
+            font-size: 1.3em;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .portrait-style {
+            display: inline-block;
+            padding: 5px 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+
+        .prompt-section {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+
+        .prompt-label {
+            font-weight: bold;
+            color: #764ba2;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .prompt-text {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+            color: #555;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .copy-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 10px;
+            transition: transform 0.3s ease;
+            width: 100%;
+        }
+
+        .copy-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .copy-btn:active {
+            transform: scale(0.95);
+        }
+
+        .copied {
+            background: linear-gradient(135deg, #00c851 0%, #00ff00 100%);
+        }
+
+        /* تأثيرات الحركة */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* الشريط العائم */
+        .floating-nav {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5em;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* التوافق مع الموبايل */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tips-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sites-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* مؤشر التحميل */
+        .loader {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #764ba2;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- الهيدر -->
+    <header>
+        <div class="header-content">
+            <h1>🎨 معرض البورتريهات بالذكاء الاصطناعي</h1>
+            <p class="subtitle">اكتشف أفضل البرومتات لإنشاء صور شخصية احترافية</p>
+        </div>
+    </header>
+
+    <!-- قسم النصائح -->
+    <div class="tips-section">
+        <div class="tips-container">
+            <div class="tip-card">
+                <h3>💡 نصيحة 1</h3>
+                <p>استخدم كلمات وصفية دقيقة مثل "hyperrealistic" و "8k resolution" للحصول على جودة عالية</p>
+            </div>
+            <div class="tip-card">
+                <h3>🎯 نصيحة 2</h3>
+                <p>حدد نمط الإضاءة المطلوب مثل "studio lighting" أو "golden hour" لنتائج احترافية</p>
+            </div>
+            <div class="tip-card">
+                <h3>🎨 نصيحة 3</h3>
+                <p>أضف تفاصيل العمر والملابس والخلفية للحصول على النتيجة المطلوبة بدقة</p>
+            </div>
+            <div class="tip-card">
+                <h3>⚡ نصيحة 4</h3>
+                <p>استخدم الكلمات السلبية "negative prompt" لتجنب العيوب غير المرغوبة</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- قسم المواقع المقترحة -->
+    <div class="sites-section">
+        <h2 style="text-align: center; color: #764ba2; margin-bottom: 20px;">🚀 أفضل المواقع لاستخدام البرومتات</h2>
+        <div class="sites-grid">
+            <div class="site-card" onclick="window.open('https://www.midjourney.com', '_blank')">
+                <h4>Midjourney</h4>
+                <p>الأفضل للفن الإبداعي</p>
+                <span class="site-status">مدفوع</span>
+            </div>
+            <div class="site-card" onclick="window.open('https://stablediffusionweb.com', '_blank')">
+                <h4>Stable Diffusion</h4>
+                <p>مفتوح المصدر</p>
+                <span class="site-status">مجاني</span>
+            </div>
+            <div class="site-card" onclick="window.open('https://leonardo.ai', '_blank')">
+                <h4>Leonardo AI</h4>
+                <p>150 رصيد مجاني يومياً</p>
+                <span class="site-status">فريميوم</span>
+            </div>
+            <div class="site-card" onclick="window.open('https://www.bing.com/create', '_blank')">
+                <h4>Bing Image Creator</h4>
+                <p>مجاني من مايكروسوفت</p>
+                <span class="site-status">مجاني</span>
+            </div>
+            <div class="site-card" onclick="window.open('https://playground.com', '_blank')">
+                <h4>Playground AI</h4>
+                <p>1000 صورة مجانية شهرياً</p>
+                <span class="site-status">مجاني</span>
+            </div>
+            <div class="site-card" onclick="window.open('https://ideogram.ai', '_blank')">
+                <h4>Ideogram AI</h4>
+                <p>ممتاز للنصوص</p>
+                <span class="site-status">مجاني</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- معرض الصور -->
+    <div class="gallery-container">
+        <div class="gallery-grid" id="galleryGrid">
+            <!-- البطاقات ستضاف هنا بواسطة JavaScript -->
+        </div>
+    </div>
+
+    <!-- الشريط العائم -->
+    <div class="floating-nav">
+        <button class="nav-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="للأعلى">⬆️</button>
+        <button class="nav-btn" onclick="location.reload()" title="تحديث">🔄</button>
+        <button class="nav-btn" onclick="toggleDarkMode()" title="الوضع الليلي">🌙</button>
+    </div>
+
+    <script>
+        // بيانات البورتريهات
+        const portraits = [
+            {
+                title: "بورتريه سينمائي احترافي",
+                style: "سينمائي",
+                prompt: "Professional cinematic portrait of a young woman, dramatic lighting, shallow depth of field, shot on 85mm lens, film grain, moody atmosphere, professional color grading, ultra detailed, 8k resolution, award winning photography",
+                negativePrompt: "cartoon, painting, illustration, (worst quality, low quality, normal quality:2)"
+            },
+            {
+                title: "رجل أعمال محترف",
+                style: "تصوير احترافي",
+                prompt: "Professional business portrait of a confident businessman in his 40s, wearing elegant dark suit, studio lighting, clean white background, sharp focus, professional headshot, commercial photography style, ultra realistic, 8k quality",
+                negativePrompt: "casual clothes, messy appearance, poor lighting, blurry"
+            },
+            {
+                title: "بورتريه فني إبداعي",
+                style: "فن رقمي",
+                prompt: "Artistic portrait of a creative artist, colorful paint splashes, vibrant colors, dynamic composition, mixed media style, creative lighting, bohemian atmosphere, highly detailed, digital art masterpiece, trending on artstation",
+                negativePrompt: "boring composition, monochrome, traditional, conventional"
+            },
+            {
+                title: "طفلة بابتسامة بريئة",
+                style: "تصوير عائلي",
+                prompt: "Adorable portrait of a smiling 6-year-old girl, natural lighting, outdoor garden setting, soft bokeh background, genuine happiness, professional family photography, warm colors, high resolution, heartwarming moment",
+                negativePrompt: "sad expression, indoor, artificial lighting, poor quality"
+            },
+            {
+                title: "محارب ملحمي خيالي",
+                style: "فانتازيا",
+                prompt: "Epic fantasy warrior portrait, detailed armor, battle scars, intense gaze, dramatic lighting, smoke and fire background, highly detailed, digital painting, concept art style, cinematic composition, 8k resolution, masterpiece",
+                negativePrompt: "modern clothes, peaceful, cartoon style, low detail"
+            },
+            {
+                title: "عارضة أزياء أنيقة",
+                style: "أزياء",
+                prompt: "High fashion model portrait, elegant pose, designer dress, luxury jewelry, professional fashion photography, vogue magazine style, perfect lighting, flawless skin, editorial quality, ultra high definition",
+                negativePrompt: "casual wear, amateur photography, poor posing, bad lighting"
+            },
+            {
+                title: "رجل مسن حكيم",
+                style: "بورتريه كلاسيكي",
+                prompt: "Wise elderly man portrait, deep wrinkles telling stories, kind eyes, white beard, traditional clothing, warm lighting, emotional depth, character portrait, professional photography, life experience visible, 8k detail",
+                negativePrompt: "young appearance, modern style, emotionless, low quality"
+            },
+            {
+                title: "رياضي في لحظة انتصار",
+                style: "تصوير رياضي",
+                prompt: "Athletic champion portrait, victory moment, sweat glistening, determined expression, stadium lights, dynamic angle, sports photography, high energy, motivational, professional athlete, ultra sharp focus",
+                negativePrompt: "defeated look, static pose, poor lighting, blurry motion"
+            },
+            {
+                title: "فنانة بوهيمية",
+                style: "نمط بوهيمي",
+                prompt: "Bohemian artist woman, flowing dress, flower crown, sunset golden hour lighting, dreamy atmosphere, soft focus, vintage film aesthetic, natural beauty, free spirit vibes, professional portrait photography",
+                negativePrompt: "corporate style, harsh lighting, overly edited, artificial look"
+            },
+            {
+                title: "طبيب في المستشفى",
+                style: "تصوير مهني",
+                prompt: "Professional doctor portrait, white coat, stethoscope, confident smile, hospital setting, clean environment, trustworthy appearance, medical professional, corporate headshot style, high resolution",
+                negativePrompt: "unprofessional appearance, messy, casual clothes, poor quality"
+            },
+            {
+                title: "موسيقي مع آلته",
+                style: "تصوير فني",
+                prompt: "Passionate musician portrait with vintage guitar, stage lighting, emotional expression, concert atmosphere, dramatic shadows, music studio setting, artistic composition, professional music photography",
+                negativePrompt: "no instrument, boring pose, flat lighting, amateur quality"
+            },
+            {
+                title: "عروس في يوم زفافها",
+                style: "تصوير زفاف",
+                prompt: "Beautiful bride portrait, elegant wedding dress, delicate veil, soft romantic lighting, bouquet of roses, joyful expression, wedding photography style, dreamy atmosphere, high-end retouching, magazine quality",
+                negativePrompt: "casual clothes, sad expression, poor makeup, bad lighting"
+            }
+        ];
+
+        // إنشاء البطاقات
+        function createGallery() {
+            const galleryGrid = document.getElementById('galleryGrid');
+            
+            portraits.forEach((portrait, index) => {
+                const card = document.createElement('div');
+                card.className = 'portrait-card';
+                card.style.animationDelay = `${index * 0.1}s`;
+                
+                card.innerHTML = `
+                    <div class="portrait-image">
+                        <span style="z-index: 1;">صورة ${index + 1}</span>
+                    </div>
+                    <div class="portrait-info">
+                        <h3 class="portrait-title">${portrait.title}</h3>
+                        <span class="portrait-style">${portrait.style}</span>
+                        
+                        <div class="prompt-section">
+                            <label class="prompt-label">📝 البرومت الإيجابي:</label>
+                            <div class="prompt-text" id="prompt-${index}">${portrait.prompt}</div>
+                            <button class="copy-btn" onclick="copyPrompt('prompt-${index}', this)">
+                                📋 نسخ البرومت
+                            </button>
+                        </div>
+                        
+                        ${portrait.negativePrompt ? `
+                        <div class="prompt-section">
+                            <label class="prompt-label">🚫 البرومت السلبي:</label>
+                            <div class="prompt-text" id="negative-${index}">${portrait.negativePrompt}</div>
+                            <button class="copy-btn" onclick="copyPrompt('negative-${index}', this)">
+                                📋 نسخ البرومت السلبي
+                            </button>
+                        </div>
+                        ` : ''}
+                    </div>
+                `;
+                
+                galleryGrid.appendChild(card);
+            });
+        }
+
+        // وظيفة النسخ
+        function copyPrompt(elementId, button) {
+            const promptText = document.getElementById(elementId).textContent;
+            
+            navigator.clipboard.writeText(promptText).then(() => {
+                const originalText = button.innerHTML;
+                button.innerHTML = '✅ تم النسخ!';
+                button.classList.add('copied');
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                // طريقة بديلة للنسخ
+                const textArea = document.createElement('textarea');
+                textArea.value = promptText;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                const originalText = button.innerHTML;
+                button.innerHTML = '✅ تم النسخ!';
+                button.classList.add('copied');
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        // الوضع الليلي
+        let darkMode = false;
+        function toggleDarkMode() {
+            darkMode = !darkMode;
+            if (darkMode) {
+                document.body.style.filter = 'invert(1) hue-rotate(180deg)';
+                document.querySelectorAll('img').forEach(img => {
+                    img.style.filter = 'invert(1) hue-rotate(180deg)';
+                });
+            } else {
+                document.body.style.filter = '';
+                document.querySelectorAll('img').forEach(img => {
+                    img.style.filter = '';
+                });
+            }
+        }
+
+        // تحميل الصور التدريجي
+        function lazyLoadImages() {
+            const images = document.querySelectorAll('.portrait-image');
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            });
+
+            images.forEach(image => {
+                imageObserver.observe(image);
+            });
+        }
+
+        // تهيئة الموقع
+        document.addEventListener('DOMContentLoaded', () => {
+            createGallery();
+            lazyLoadImages();
+            
+            // إضافة تأثير التمرير السلس
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+
+        // إظهار/إخفاء الشريط العائم عند التمرير
+        let lastScrollTop = 0;
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const floatingNav = document.querySelector('.floating-nav');
+            
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                floatingNav.style.transform = 'translateY(100px)';
+            } else {
+                floatingNav.style.transform = 'translateY(0)';
+            }
+            lastScrollTop = scrollTop;
+        });
+
+        // إضافة رسالة ترحيب
+        window.addEventListener('load', () => {
+            console.log('🎨 مرحباً بك في معرض البورتريهات بالذكاء الاصطناعي!');
+            console.log('💡 انسخ البرومتات واستخدمها في مواقع الذكاء الاصطناعي المختلفة');
+        });
+    </script>
+</body>
+</html> ... -->
+</html>
