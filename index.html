@@ -1,658 +1,464 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-<!-- ... <!DOCTYPE html>
-<html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>معرض البورتريهات بالذكاء الاصطناعي</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hani Yatimi | AI & Tech</title>
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            color: #333;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
 
-        /* الهيدر */
-        header {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 20px 0;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
 
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            text-align: center;
-        }
+:root{
+--bg:#050816;
+--primary:#00e5ff;
+--secondary:#8b5cf6;
+--text:#fff;
+--muted:#94a3b8;
+}
 
-        h1 {
-            color: #764ba2;
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            animation: fadeInDown 1s ease;
-        }
+body{
+min-height:100vh;
+font-family:'Tajawal',sans-serif;
+background:radial-gradient(circle at top,#172554,#020617 75%);
+color:var(--text);
+display:flex;
+justify-content:center;
+padding:35px 16px 60px;
+overflow-x:hidden;
+perspective:1200px;
+}
 
-        .subtitle {
-            color: #666;
-            font-size: 1.1em;
-            animation: fadeInUp 1s ease;
-        }
+body::before{
+content:"";
+position:fixed;
+inset:0;
+background-image:
+linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
+linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+background-size:42px 42px;
+animation:grid 18s linear infinite;
+z-index:-3;
+}
 
-        /* قسم النصائح */
-        .tips-section {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            padding: 40px 20px;
-            margin: 30px 0;
-            color: white;
-        }
+body::after{
+content:"";
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at 20% 20%,rgba(0,229,255,.18),transparent 30%),
+radial-gradient(circle at 80% 70%,rgba(139,92,246,.22),transparent 35%);
+z-index:-2;
+}
 
-        .tips-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
+@keyframes grid{
+to{background-position:0 42px}
+}
 
-        .tip-card {
-            background: rgba(255,255,255,0.2);
-            padding: 20px;
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            transition: transform 0.3s ease;
-        }
+.cursor-light{
+position:fixed;
+width:320px;
+height:320px;
+border-radius:50%;
+background:radial-gradient(circle,rgba(0,229,255,.18),transparent 70%);
+pointer-events:none;
+transform:translate(-50%,-50%);
+z-index:-1;
+}
 
-        .tip-card:hover {
-            transform: translateY(-5px);
-        }
+.page{
+width:100%;
+max-width:430px;
+}
 
-        .tip-card h3 {
-            margin-bottom: 10px;
-            font-size: 1.2em;
-        }
+.card{
+background:rgba(255,255,255,.07);
+border:1px solid rgba(255,255,255,.13);
+border-radius:34px;
+padding:34px 22px 28px;
+text-align:center;
+backdrop-filter:blur(24px);
+box-shadow:0 0 45px rgba(0,229,255,.13),0 30px 80px rgba(0,0,0,.38);
+transform-style:preserve-3d;
+animation:entry .9s ease forwards;
+}
 
-        /* قسم المواقع المقترحة */
-        .sites-section {
-            background: white;
-            padding: 40px 20px;
-            margin: 30px 20px;
-            border-radius: 20px;
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-        }
+@keyframes entry{
+from{opacity:0;transform:translateY(40px) rotateX(10deg)}
+to{opacity:1;transform:translateY(0) rotateX(0)}
+}
 
-        .sites-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
+.avatar-box{
+position:relative;
+width:220px;
+height:220px;
+margin:0 auto 28px;
+transform-style:preserve-3d;
+}
 
-        .site-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            transition: transform 0.3s ease;
-            cursor: pointer;
-        }
+.avatar{
+width:100%;
+height:100%;
+object-fit:cover;
+object-position:center top;
+border-radius:50%;
+border:3px solid rgba(0,229,255,.6);
+box-shadow:
+0 0 35px rgba(0,229,255,.5),
+0 0 100px rgba(139,92,246,.38);
+position:relative;
+z-index:5;
+}
 
-        .site-card:hover {
-            transform: scale(1.05);
-        }
+.ring{
+position:absolute;
+border-radius:50%;
+inset:-14px;
+border:2px dashed rgba(0,229,255,.38);
+animation:spin 12s linear infinite;
+}
 
-        .site-card h4 {
-            margin-bottom: 10px;
-        }
+.ring2{
+inset:-31px;
+border-color:rgba(139,92,246,.42);
+animation:spinReverse 18s linear infinite;
+}
 
-        .site-status {
-            display: inline-block;
-            padding: 5px 10px;
-            background: rgba(255,255,255,0.3);
-            border-radius: 20px;
-            font-size: 0.9em;
-            margin-top: 10px;
-        }
+.ring3{
+inset:-48px;
+border-style:solid;
+border-color:rgba(255,255,255,.13);
+animation:spin 26s linear infinite;
+}
 
-        /* معرض الصور */
-        .gallery-container {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes spinReverse{to{transform:rotate(-360deg)}}
 
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 30px;
-        }
+.ai{
+position:absolute;
+font-size:12px;
+font-weight:900;
+color:var(--primary);
+background:rgba(0,229,255,.09);
+border:1px solid rgba(0,229,255,.25);
+padding:5px 10px;
+border-radius:20px;
+backdrop-filter:blur(10px);
+animation:float 4s ease-in-out infinite;
+z-index:6;
+}
 
-        .portrait-card {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            animation: fadeIn 0.5s ease;
-        }
+.a1{top:3px;right:-22px}
+.a2{bottom:18px;left:-32px;animation-delay:.7s}
+.a3{top:82px;left:-45px;animation-delay:1.2s}
+.a4{bottom:-12px;right:22px;animation-delay:1.8s}
 
-        .portrait-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-        }
+@keyframes float{
+50%{transform:translateY(-12px)}
+}
 
-        .portrait-image {
-            width: 100%;
-            height: 350px;
-            background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5em;
-            position: relative;
-            overflow: hidden;
-        }
+h1{
+font-size:31px;
+font-weight:900;
+letter-spacing:.3px;
+}
 
-        .portrait-image::before {
-            content: "🎨";
-            font-size: 4em;
-            opacity: 0.3;
-            position: absolute;
-        }
+.subtitle{
+margin-top:6px;
+color:var(--primary);
+font-size:15px;
+font-weight:700;
+}
 
-        .portrait-info {
-            padding: 20px;
-        }
+.bio{
+margin:18px 0 20px;
+line-height:1.9;
+font-size:15px;
+color:#dbeafe;
+}
 
-        .portrait-title {
-            font-size: 1.3em;
-            color: #333;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
+.stats{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px;
+margin-top:18px;
+}
 
-        .portrait-style {
-            display: inline-block;
-            padding: 5px 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 20px;
-            font-size: 0.9em;
-            margin-bottom: 15px;
-        }
+.stat{
+background:rgba(255,255,255,.06);
+border:1px solid rgba(255,255,255,.1);
+border-radius:18px;
+padding:12px 8px;
+}
 
-        .prompt-section {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
-        }
+.stat strong{
+display:block;
+font-size:17px;
+color:#fff;
+}
 
-        .prompt-label {
-            font-weight: bold;
-            color: #764ba2;
-            margin-bottom: 10px;
-            display: block;
-        }
+.stat span{
+font-size:11px;
+color:var(--muted);
+}
 
-        .prompt-text {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            border: 2px solid #e0e0e0;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9em;
-            line-height: 1.6;
-            color: #555;
-            direction: ltr;
-            text-align: left;
-        }
+.section{
+margin:24px 0 12px;
+color:var(--muted);
+font-size:12px;
+font-weight:900;
+letter-spacing:1.4px;
+}
 
-        .copy-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 10px 25px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 1em;
-            margin-top: 10px;
-            transition: transform 0.3s ease;
-            width: 100%;
-        }
+.links{
+display:flex;
+flex-direction:column;
+gap:12px;
+}
 
-        .copy-btn:hover {
-            transform: scale(1.05);
-        }
+.link{
+display:flex;
+align-items:center;
+gap:14px;
+padding:16px 18px;
+border-radius:22px;
+text-decoration:none;
+color:white;
+background:linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,.03));
+border:1px solid rgba(255,255,255,.1);
+backdrop-filter:blur(18px);
+box-shadow:0 12px 35px rgba(0,0,0,.25);
+transition:.28s ease;
+overflow:hidden;
+position:relative;
+}
 
-        .copy-btn:active {
-            transform: scale(0.95);
-        }
+.link::before{
+content:"";
+position:absolute;
+inset:0;
+background:linear-gradient(90deg,transparent,rgba(0,229,255,.18),transparent);
+transform:translateX(100%);
+transition:.5s;
+}
 
-        .copied {
-            background: linear-gradient(135deg, #00c851 0%, #00ff00 100%);
-        }
+.link:hover::before{
+transform:translateX(-100%);
+}
 
-        /* تأثيرات الحركة */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+.link:hover{
+transform:translateY(-6px) scale(1.02);
+box-shadow:0 0 28px rgba(0,229,255,.28),0 20px 50px rgba(0,0,0,.35);
+}
 
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+.icon{
+width:46px;
+height:46px;
+border-radius:16px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+background:linear-gradient(135deg,var(--primary),var(--secondary));
+flex-shrink:0;
+}
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+.text{
+flex:1;
+}
 
-        /* الشريط العائم */
-        .floating-nav {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: white;
-            padding: 15px;
-            border-radius: 50px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            z-index: 1000;
-            display: flex;
-            gap: 10px;
-        }
+.text strong{
+display:block;
+font-size:15px;
+}
 
-        .nav-btn {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 1.5em;
-            transition: transform 0.3s ease;
-        }
+.text span{
+display:block;
+color:var(--muted);
+font-size:12px;
+margin-top:2px;
+}
 
-        .nav-btn:hover {
-            transform: scale(1.1);
-        }
+.arrow{
+color:var(--primary);
+font-size:20px;
+}
 
-        /* التوافق مع الموبايل */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 1.8em;
-            }
-            
-            .gallery-grid {
-                grid-template-columns: 1fr;
-            }
+.footer{
+margin-top:26px;
+text-align:center;
+color:var(--muted);
+font-size:12px;
+}
 
-            .tips-container {
-                grid-template-columns: 1fr;
-            }
+.footer strong{
+color:var(--primary);
+}
 
-            .sites-grid {
-                grid-template-columns: 1fr;
-            }
-        }
+.particle{
+position:fixed;
+width:5px;
+height:5px;
+background:var(--primary);
+border-radius:50%;
+opacity:.35;
+animation:particle linear infinite;
+z-index:-1;
+}
 
-        /* مؤشر التحميل */
-        .loader {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #764ba2;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
+@keyframes particle{
+from{transform:translateY(110vh);opacity:0}
+20%{opacity:.45}
+to{transform:translateY(-20vh);opacity:0}
+}
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
+@media(max-width:480px){
+.avatar-box{width:190px;height:190px}
+h1{font-size:27px}
+.card{padding:30px 18px 24px}
+}
+</style>
 </head>
+
 <body>
-    <!-- الهيدر -->
-    <header>
-        <div class="header-content">
-            <h1>🎨 معرض البورتريهات بالذكاء الاصطناعي</h1>
-            <p class="subtitle">اكتشف أفضل البرومتات لإنشاء صور شخصية احترافية</p>
-        </div>
-    </header>
 
-    <!-- قسم النصائح -->
-    <div class="tips-section">
-        <div class="tips-container">
-            <div class="tip-card">
-                <h3>💡 نصيحة 1</h3>
-                <p>استخدم كلمات وصفية دقيقة مثل "hyperrealistic" و "8k resolution" للحصول على جودة عالية</p>
-            </div>
-            <div class="tip-card">
-                <h3>🎯 نصيحة 2</h3>
-                <p>حدد نمط الإضاءة المطلوب مثل "studio lighting" أو "golden hour" لنتائج احترافية</p>
-            </div>
-            <div class="tip-card">
-                <h3>🎨 نصيحة 3</h3>
-                <p>أضف تفاصيل العمر والملابس والخلفية للحصول على النتيجة المطلوبة بدقة</p>
-            </div>
-            <div class="tip-card">
-                <h3>⚡ نصيحة 4</h3>
-                <p>استخدم الكلمات السلبية "negative prompt" لتجنب العيوب غير المرغوبة</p>
-            </div>
-        </div>
-    </div>
+<div class="cursor-light"></div>
 
-    <!-- قسم المواقع المقترحة -->
-    <div class="sites-section">
-        <h2 style="text-align: center; color: #764ba2; margin-bottom: 20px;">🚀 أفضل المواقع لاستخدام البرومتات</h2>
-        <div class="sites-grid">
-            <div class="site-card" onclick="window.open('https://www.midjourney.com', '_blank')">
-                <h4>Midjourney</h4>
-                <p>الأفضل للفن الإبداعي</p>
-                <span class="site-status">مدفوع</span>
-            </div>
-            <div class="site-card" onclick="window.open('https://stablediffusionweb.com', '_blank')">
-                <h4>Stable Diffusion</h4>
-                <p>مفتوح المصدر</p>
-                <span class="site-status">مجاني</span>
-            </div>
-            <div class="site-card" onclick="window.open('https://leonardo.ai', '_blank')">
-                <h4>Leonardo AI</h4>
-                <p>150 رصيد مجاني يومياً</p>
-                <span class="site-status">فريميوم</span>
-            </div>
-            <div class="site-card" onclick="window.open('https://www.bing.com/create', '_blank')">
-                <h4>Bing Image Creator</h4>
-                <p>مجاني من مايكروسوفت</p>
-                <span class="site-status">مجاني</span>
-            </div>
-            <div class="site-card" onclick="window.open('https://playground.com', '_blank')">
-                <h4>Playground AI</h4>
-                <p>1000 صورة مجانية شهرياً</p>
-                <span class="site-status">مجاني</span>
-            </div>
-            <div class="site-card" onclick="window.open('https://ideogram.ai', '_blank')">
-                <h4>Ideogram AI</h4>
-                <p>ممتاز للنصوص</p>
-                <span class="site-status">مجاني</span>
-            </div>
-        </div>
-    </div>
+<div class="page">
 
-    <!-- معرض الصور -->
-    <div class="gallery-container">
-        <div class="gallery-grid" id="galleryGrid">
-            <!-- البطاقات ستضاف هنا بواسطة JavaScript -->
-        </div>
-    </div>
+<div class="card">
 
-    <!-- الشريط العائم -->
-    <div class="floating-nav">
-        <button class="nav-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="للأعلى">⬆️</button>
-        <button class="nav-btn" onclick="location.reload()" title="تحديث">🔄</button>
-        <button class="nav-btn" onclick="toggleDarkMode()" title="الوضع الليلي">🌙</button>
-    </div>
+<div class="avatar-box">
+<div class="ring"></div>
+<div class="ring ring2"></div>
+<div class="ring ring3"></div>
 
-    <script>
-        // بيانات البورتريهات
-        const portraits = [
-            {
-                title: "بورتريه سينمائي احترافي",
-                style: "سينمائي",
-                prompt: "Professional cinematic portrait of a young woman, dramatic lighting, shallow depth of field, shot on 85mm lens, film grain, moody atmosphere, professional color grading, ultra detailed, 8k resolution, award winning photography",
-                negativePrompt: "cartoon, painting, illustration, (worst quality, low quality, normal quality:2)"
-            },
-            {
-                title: "رجل أعمال محترف",
-                style: "تصوير احترافي",
-                prompt: "Professional business portrait of a confident businessman in his 40s, wearing elegant dark suit, studio lighting, clean white background, sharp focus, professional headshot, commercial photography style, ultra realistic, 8k quality",
-                negativePrompt: "casual clothes, messy appearance, poor lighting, blurry"
-            },
-            {
-                title: "بورتريه فني إبداعي",
-                style: "فن رقمي",
-                prompt: "Artistic portrait of a creative artist, colorful paint splashes, vibrant colors, dynamic composition, mixed media style, creative lighting, bohemian atmosphere, highly detailed, digital art masterpiece, trending on artstation",
-                negativePrompt: "boring composition, monochrome, traditional, conventional"
-            },
-            {
-                title: "طفلة بابتسامة بريئة",
-                style: "تصوير عائلي",
-                prompt: "Adorable portrait of a smiling 6-year-old girl, natural lighting, outdoor garden setting, soft bokeh background, genuine happiness, professional family photography, warm colors, high resolution, heartwarming moment",
-                negativePrompt: "sad expression, indoor, artificial lighting, poor quality"
-            },
-            {
-                title: "محارب ملحمي خيالي",
-                style: "فانتازيا",
-                prompt: "Epic fantasy warrior portrait, detailed armor, battle scars, intense gaze, dramatic lighting, smoke and fire background, highly detailed, digital painting, concept art style, cinematic composition, 8k resolution, masterpiece",
-                negativePrompt: "modern clothes, peaceful, cartoon style, low detail"
-            },
-            {
-                title: "عارضة أزياء أنيقة",
-                style: "أزياء",
-                prompt: "High fashion model portrait, elegant pose, designer dress, luxury jewelry, professional fashion photography, vogue magazine style, perfect lighting, flawless skin, editorial quality, ultra high definition",
-                negativePrompt: "casual wear, amateur photography, poor posing, bad lighting"
-            },
-            {
-                title: "رجل مسن حكيم",
-                style: "بورتريه كلاسيكي",
-                prompt: "Wise elderly man portrait, deep wrinkles telling stories, kind eyes, white beard, traditional clothing, warm lighting, emotional depth, character portrait, professional photography, life experience visible, 8k detail",
-                negativePrompt: "young appearance, modern style, emotionless, low quality"
-            },
-            {
-                title: "رياضي في لحظة انتصار",
-                style: "تصوير رياضي",
-                prompt: "Athletic champion portrait, victory moment, sweat glistening, determined expression, stadium lights, dynamic angle, sports photography, high energy, motivational, professional athlete, ultra sharp focus",
-                negativePrompt: "defeated look, static pose, poor lighting, blurry motion"
-            },
-            {
-                title: "فنانة بوهيمية",
-                style: "نمط بوهيمي",
-                prompt: "Bohemian artist woman, flowing dress, flower crown, sunset golden hour lighting, dreamy atmosphere, soft focus, vintage film aesthetic, natural beauty, free spirit vibes, professional portrait photography",
-                negativePrompt: "corporate style, harsh lighting, overly edited, artificial look"
-            },
-            {
-                title: "طبيب في المستشفى",
-                style: "تصوير مهني",
-                prompt: "Professional doctor portrait, white coat, stethoscope, confident smile, hospital setting, clean environment, trustworthy appearance, medical professional, corporate headshot style, high resolution",
-                negativePrompt: "unprofessional appearance, messy, casual clothes, poor quality"
-            },
-            {
-                title: "موسيقي مع آلته",
-                style: "تصوير فني",
-                prompt: "Passionate musician portrait with vintage guitar, stage lighting, emotional expression, concert atmosphere, dramatic shadows, music studio setting, artistic composition, professional music photography",
-                negativePrompt: "no instrument, boring pose, flat lighting, amateur quality"
-            },
-            {
-                title: "عروس في يوم زفافها",
-                style: "تصوير زفاف",
-                prompt: "Beautiful bride portrait, elegant wedding dress, delicate veil, soft romantic lighting, bouquet of roses, joyful expression, wedding photography style, dreamy atmosphere, high-end retouching, magazine quality",
-                negativePrompt: "casual clothes, sad expression, poor makeup, bad lighting"
-            }
-        ];
+<img class="avatar" src="profile.jpg" alt="Hani Yatimi Profile">
 
-        // إنشاء البطاقات
-        function createGallery() {
-            const galleryGrid = document.getElementById('galleryGrid');
-            
-            portraits.forEach((portrait, index) => {
-                const card = document.createElement('div');
-                card.className = 'portrait-card';
-                card.style.animationDelay = `${index * 0.1}s`;
-                
-                card.innerHTML = `
-                    <div class="portrait-image">
-                        <span style="z-index: 1;">صورة ${index + 1}</span>
-                    </div>
-                    <div class="portrait-info">
-                        <h3 class="portrait-title">${portrait.title}</h3>
-                        <span class="portrait-style">${portrait.style}</span>
-                        
-                        <div class="prompt-section">
-                            <label class="prompt-label">📝 البرومت الإيجابي:</label>
-                            <div class="prompt-text" id="prompt-${index}">${portrait.prompt}</div>
-                            <button class="copy-btn" onclick="copyPrompt('prompt-${index}', this)">
-                                📋 نسخ البرومت
-                            </button>
-                        </div>
-                        
-                        ${portrait.negativePrompt ? `
-                        <div class="prompt-section">
-                            <label class="prompt-label">🚫 البرومت السلبي:</label>
-                            <div class="prompt-text" id="negative-${index}">${portrait.negativePrompt}</div>
-                            <button class="copy-btn" onclick="copyPrompt('negative-${index}', this)">
-                                📋 نسخ البرومت السلبي
-                            </button>
-                        </div>
-                        ` : ''}
-                    </div>
-                `;
-                
-                galleryGrid.appendChild(card);
-            });
-        }
+<div class="ai a1">AI</div>
+<div class="ai a2">GPT</div>
+<div class="ai a3">TECH</div>
+<div class="ai a4">DATA</div>
+</div>
 
-        // وظيفة النسخ
-        function copyPrompt(elementId, button) {
-            const promptText = document.getElementById(elementId).textContent;
-            
-            navigator.clipboard.writeText(promptText).then(() => {
-                const originalText = button.innerHTML;
-                button.innerHTML = '✅ تم النسخ!';
-                button.classList.add('copied');
-                
-                setTimeout(() => {
-                    button.innerHTML = originalText;
-                    button.classList.remove('copied');
-                }, 2000);
-            }).catch(err => {
-                // طريقة بديلة للنسخ
-                const textArea = document.createElement('textarea');
-                textArea.value = promptText;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-                
-                const originalText = button.innerHTML;
-                button.innerHTML = '✅ تم النسخ!';
-                button.classList.add('copied');
-                
-                setTimeout(() => {
-                    button.innerHTML = originalText;
-                    button.classList.remove('copied');
-                }, 2000);
-            });
-        }
+<h1>Hani Yatimi</h1>
+<p class="subtitle">AI & Tech Creator</p>
 
-        // الوضع الليلي
-        let darkMode = false;
-        function toggleDarkMode() {
-            darkMode = !darkMode;
-            if (darkMode) {
-                document.body.style.filter = 'invert(1) hue-rotate(180deg)';
-                document.querySelectorAll('img').forEach(img => {
-                    img.style.filter = 'invert(1) hue-rotate(180deg)';
-                });
-            } else {
-                document.body.style.filter = '';
-                document.querySelectorAll('img').forEach(img => {
-                    img.style.filter = '';
-                });
-            }
-        }
+<div class="bio">
+🚀 AI & Tech Simplified<br>
+🤖 مواقع ذكاء اصطناعي يومياً<br>
+📱 تطبيقات لازم تعرفها<br>
+💰 AI طرق الربح من<br>
+👇 تابع وطوّر نفسك
+</div>
 
-        // تحميل الصور التدريجي
-        function lazyLoadImages() {
-            const images = document.querySelectorAll('.portrait-image');
-            const imageObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        observer.unobserve(entry.target);
-                    }
-                });
-            });
+<div class="stats">
+<div class="stat">
+<strong>10.4K</strong>
+<span>Followers</span>
+</div>
+<div class="stat">
+<strong>AI</strong>
+<span>Tools</span>
+</div>
+<div class="stat">
+<strong>Daily</strong>
+<span>Content</span>
+</div>
+</div>
 
-            images.forEach(image => {
-                imageObserver.observe(image);
-            });
-        }
+</div>
 
-        // تهيئة الموقع
-        document.addEventListener('DOMContentLoaded', () => {
-            createGallery();
-            lazyLoadImages();
-            
-            // إضافة تأثير التمرير السلس
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    document.querySelector(this.getAttribute('href')).scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                });
-            });
-        });
+<div class="section">ابدأ من هنا</div>
 
-        // إظهار/إخفاء الشريط العائم عند التمرير
-        let lastScrollTop = 0;
-        window.addEventListener('scroll', () => {
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            const floatingNav = document.querySelector('.floating-nav');
-            
-            if (scrollTop > lastScrollTop && scrollTop > 100) {
-                floatingNav.style.transform = 'translateY(100px)';
-            } else {
-                floatingNav.style.transform = 'translateY(0)';
-            }
-            lastScrollTop = scrollTop;
-        });
+<div class="links">
 
-        // إضافة رسالة ترحيب
-        window.addEventListener('load', () => {
-            console.log('🎨 مرحباً بك في معرض البورتريهات بالذكاء الاصطناعي!');
-            console.log('💡 انسخ البرومتات واستخدمها في مواقع الذكاء الاصطناعي المختلفة');
-        });
-    </script>
+<a class="link" href="https://www.instagram.com/hani_yatimi" target="_blank">
+<div class="icon">📸</div>
+<div class="text">
+<strong>Instagram</strong>
+<span>تابعني للمحتوى اليومي</span>
+</div>
+<div class="arrow">←</div>
+</a>
+
+<a class="link" href="#" target="_blank">
+<div class="icon">🎵</div>
+<div class="text">
+<strong>TikTok</strong>
+<span>فيديوهات قصيرة عن AI</span>
+</div>
+<div class="arrow">←</div>
+</a>
+
+<a class="link" href="#" target="_blank">
+<div class="icon">▶️</div>
+<div class="text">
+<strong>YouTube</strong>
+<span>شروحات وأفكار تقنية</span>
+</div>
+<div class="arrow">←</div>
+</a>
+
+<a class="link" href="#" target="_blank">
+<div class="icon">💬</div>
+<div class="text">
+<strong>Telegram</strong>
+<span>مصادر وأدوات مجانية</span>
+</div>
+<div class="arrow">←</div>
+</a>
+
+<a class="link" href="#" target="_blank">
+<div class="icon">📩</div>
+<div class="text">
+<strong>Contact</strong>
+<span>تواصل معي مباشرة</span>
+</div>
+<div class="arrow">←</div>
+</a>
+
+</div>
+
+<div class="footer">
+Powered by <strong>AI World</strong> ⚡
+</div>
+
+</div>
+
+<script>
+const card=document.querySelector('.card');
+const avatar=document.querySelector('.avatar-box');
+const light=document.querySelector('.cursor-light');
+
+document.addEventListener('mousemove',e=>{
+const x=(window.innerWidth/2-e.clientX)/35;
+const y=(window.innerHeight/2-e.clientY)/35;
+
+card.style.transform=`rotateY(${x}deg) rotateX(${-y}deg)`;
+avatar.style.transform=`rotateY(${-x*1.3}deg) rotateX(${y*1.3}deg) translateZ(20px)`;
+
+light.style.left=e.clientX+'px';
+light.style.top=e.clientY+'px';
+});
+
+document.addEventListener('mouseleave',()=>{
+card.style.transform='rotateY(0deg) rotateX(0deg)';
+avatar.style.transform='rotateY(0deg) rotateX(0deg)';
+});
+
+for(let i=0;i<38;i++){
+const p=document.createElement('div');
+p.className='particle';
+p.style.left=Math.random()*100+'vw';
+p.style.animationDuration=6+Math.random()*10+'s';
+p.style.animationDelay=Math.random()*8+'s';
+p.style.width=3+Math.random()*5+'px';
+p.style.height=p.style.width;
+document.body.appendChild(p);
+}
+</script>
+
 </body>
-</html> ... -->
 </html>
